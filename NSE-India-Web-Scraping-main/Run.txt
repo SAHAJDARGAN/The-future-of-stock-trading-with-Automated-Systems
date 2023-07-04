@@ -1,1 +1,0 @@
-Run the scraper.ipynb file(notebook with python3 kernel required)
