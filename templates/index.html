@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Prediction</title>
+</head>
+<link rel="stylesheet" href="http://127.0.0.1:8080/static/pred.css">
+<script>
+    const base="http://127.0.0.1:8080/logres_op/residuals/";
+    const perf_base="http://127.0.0.1:8080/logres_op/plots/"
+    const name="{{stock_name}}";
+    const imgurl=base+name+"train.png";
+    const imgurl1=base+name+"test.png";
+    const prefimg=perf_base+"Train"+name+".png";
+    const prefimg1=perf_base+"Test"+name+".png";
+    console.log(imgurl);
+    console.log(imgurl1);
+    console.log(prefimg);
+    console.log(prefimg1);
+    const img = document.createElement("img");
+    const img1=document.createElement("img");
+    const pimg=document.createElement("img");
+    const pimg1=document.createElement("img");
+    img.src = imgurl;
+    img1.src=imgurl1;
+    pimg.src=prefimg;
+    pimg1.src=prefimg1;
+    document.addEventListener("DOMContentLoaded", function() {
+        const imageContainer = document.getElementById("imageContainer");
+        imageContainer.appendChild(img);
+        const imageContainer1 = document.getElementById("imageContainer1");
+        imageContainer1.appendChild(img1);
+        const per=document.getElementById("perfTrain");
+        per.appendChild(pimg);
+        const per1=document.getElementById("perfTest");
+        per1.appendChild(pimg1);
+});
+
+
+</script>
+<body>
+    <h1>Stock Prediction</h1>
+    <hr>
+    <h2>Stock: {{ stock_name }}</h2>
+    <hr>
+    <h3>Stock Sentiment: {{sentiment}}</h3>
+    <h3>Current Share Value: {{ value }}</h3>
+    <h3>Estimated Close Prices:</h3>
+    <div style="border:1px #000000 solid; width:130px; height:100px; overflow:auto;">
+        {{ data|safe }}
+    </div>
+    </table>
+    <hr>
+    <h3>Prediction Plot:</h3>
+    <img src="http://127.0.0.1:8080/logres_op/temp_img/image.png" alt="Prediction Plot">
+    <h1>Model performance</h1>
+    <hr>
+    <h3>Mean Absolute Error(MAE): {{mae}}</h3>
+    <br>
+    <h3>Root mean Square Error(RMSE): {{rmse}}</h3>
+    <br>
+    <h2>close price estimates on the train dataset</h2>
+    <div id="perfTrain"></div>
+    <h2>close price estimates on the test dataset</h2>
+    <div id="perfTest"></div>
+    <h1>Model residuals</h1>
+    <hr>
+    <div class='parent'>
+        <div class='child float-left-child' id="imageContainer"></div>
+        <div class='child float-left-child' id="imageContainer1"></div>
+      </div>
+</body>
+</html>
